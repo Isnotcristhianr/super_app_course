@@ -14,11 +14,19 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Super App'),
-        ),
-        body: const Center(
-          child: Text('Hello, World!'),
+        appBar: AppBar(title: const Text('Super App')),
+        body: Center(
+          child: Column(
+            children: [
+              Text('Hello, World!'),
+              ElevatedButton(
+                onPressed: () {
+                  print('Hola Mundo');
+                },
+                child: const Text('Hola Mundo'),
+              ),
+            ],
+          ),
         ),
       ),
     );
