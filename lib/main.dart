@@ -13,7 +13,14 @@ class MyApp extends StatelessWidget {
       title: 'Super App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: Scaffold(),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Super App'),
+        ),
+        body: const Center(
+          child: Text('Hello, World!'),
+        ),
+      ),
     );
   }
 }
