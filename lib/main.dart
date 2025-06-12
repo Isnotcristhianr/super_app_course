@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:super_app/config/theme/app_theme.dart';
 //getx
 import 'package:get/get.dart';
+//routes
+import 'presentation/routes/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,28 +17,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Super App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true, colorSchemeSeed: colorList[0]),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Super App')),
-        body: Center(
-          child: Column(
-            children: [
-              Text('Hello, World!'),
-              ElevatedButton(
-                onPressed: () {
-                  Get.snackbar(
-                    "Hola",
-                    "Hola Mundo",
-                    backgroundColor: Colors.red,
-                    colorText: Colors.white,
-                  );
-                },
-                child: const Text('Hola Mundo'),
-              ),
-            ],
-          ),
-        ),
-      ),
+      theme: AppTheme(selector: 0).getTheme(),
+      getPages: Routes.pages,
+      initialRoute: Routes.welcome,
     );
   }
 }
