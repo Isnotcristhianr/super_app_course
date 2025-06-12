@@ -6,27 +6,24 @@ class WelcomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return GetMaterialApp(
-      title: 'Welcome',
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Welcome')),
-        body: Center(
-          child: Column(
-            children: [
-              Text('Hello, World!'),
-              ElevatedButton(
-                onPressed: () {
-                  Get.snackbar(
-                    "Hola",
-                    "Hola Mundo",
-                    backgroundColor: Colors.red,
-                    colorText: Colors.white,
-                  );
-                },
-                child: const Text('Hola Mundo'),
-              ),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Welcome')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Welcome',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Get.toNamed("/login");
+              },
+              child: const Text('Login'),
+            ),
+          ],
         ),
       ),
     );

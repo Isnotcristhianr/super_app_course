@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -9,9 +10,19 @@ class LoginView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: const Center(
-        child: Text('Login'),
+        body:  Center(
+          child: Column(
+            children: [
+              Text('Login'),
+              ElevatedButton(
+                onPressed: () {
+                  Get.toNamed("/home");
+                },  
+                child: const Text('Home'),
+              )
+            ],
+          ),
       ),
     );
   }
-}
+  }
