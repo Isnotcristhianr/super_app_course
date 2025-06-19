@@ -14,6 +14,7 @@ class AuthController extends GetxController {
   //variables
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   //user
+  late String uid;
   final Rx<String> userName = ''.obs;
   final Rx<String> userEmail = ''.obs;
   final Rx<String> userProfilePictureUrl = ''.obs;
@@ -29,18 +30,34 @@ class AuthController extends GetxController {
     _initializeAuth();
   }
 
-  void _initializeAuth() {
+  void _initializeAuth() async {
     try {
       final currentUser = _firebaseAuth.currentUser;
       if (currentUser != null) {
-        userName.value = currentUser.displayName ?? '';
-        userEmail.value = currentUser.email ?? '';
-        userProfilePictureUrl.value = currentUser.photoURL ?? '';
-        userDni.value = '';
-        userPhoneNumber.value = '';
+        uid = currentUser.uid;
+        await _loadUserData();
       }
     } catch (e) {
       debugPrint("Error: ${e.toString()}");
+    }
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      final userDoc =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      if (userDoc.exists) {
+        final userData = userDoc.data()!;
+        userName.value = userData['name'] ?? '';
+        userEmail.value = userData['email'] ?? '';
+        userProfilePictureUrl.value = userData['profilePictureUrl'] ?? '';
+        userDni.value = userData['dni'] ?? '';
+        userPhoneNumber.value = userData['phoneNumber'] ?? '';
+        userType.value = userData['type'] ?? '';
+        userCreatedAt.value = (userData['createdAt'] as Timestamp).toDate();
+      }
+    } catch (e) {
+      debugPrint("Error loading user data: ${e.toString()}");
     }
   }
 }
