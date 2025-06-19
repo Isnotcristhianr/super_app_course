@@ -11,7 +11,7 @@ class Routes {
 
   static final List<GetPage> pages = [
     GetPage(name: welcome, page: () => WelcomeView()),
-    GetPage(name: login, page: () => LoginView()),
+    GetPage(name: login, page: () =>  LoginView()),
     GetPage(name: home, page: () => HomeView()),
   ];
 }
