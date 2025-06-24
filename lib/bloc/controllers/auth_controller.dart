@@ -37,9 +37,15 @@ class AuthController extends GetxController {
       if (currentUser != null) {
         uid = currentUser.uid;
         await _loadUserData();
+        authStatus.value = AuthStatus.authenticated;
+        debugPrint("Usuario ya autenticado: ${currentUser.email}");
+      } else {
+        authStatus.value = AuthStatus.unauthenticated;
+        debugPrint("No hay usuario autenticado");
       }
     } catch (e) {
-      debugPrint("Error: ${e.toString()}");
+      authStatus.value = AuthStatus.unauthenticated;
+      debugPrint("Error inicializando autenticación: ${e.toString()}");
     }
   }
 
@@ -50,7 +56,7 @@ class AuthController extends GetxController {
       if (userDoc.exists) {
         final userData = userDoc.data()!;
         userName.value = userData['name'] ?? '';
-        userEmail.value = userData['email'] ?? '';
+        userEmail.text = userData['email'] ?? '';
         userProfilePictureUrl.value = userData['profilePictureUrl'] ?? '';
         userDni.value = userData['dni'] ?? '';
         userPhoneNumber.value = userData['phoneNumber'] ?? '';
@@ -63,16 +69,43 @@ class AuthController extends GetxController {
   }
 
   //email and password
-  Future<void> loginWithEmailAndPassword(String email, String password) async{
-    try{
-      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+  Future<void> loginWithEmailAndPassword(String email, String password) async {
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      uid = _firebaseAuth.currentUser!.uid;
       await _loadUserData();
       authStatus.value = AuthStatus.authenticated;
+      debugPrint("Login successful");
 
       Get.offAllNamed('/home');
+    } catch (e) {
+      authStatus.value = AuthStatus.unauthenticated;
+      debugPrint("Error en login: ${e.toString()}");
+    }
+  }
 
-    }catch (e){
-      debugPrint("Error: ${e.toString()}");
+  //logout
+  Future<void> logout() async {
+    try {
+      await _firebaseAuth.signOut();
+      authStatus.value = AuthStatus.unauthenticated;
+
+      // Limpiar datos del usuario
+      userName.value = '';
+      userEmail.clear();
+      userPassword.clear();
+      userProfilePictureUrl.value = '';
+      userDni.value = '';
+      userPhoneNumber.value = '';
+      userType.value = '';
+
+      debugPrint("Logout successful");
+      Get.offAllNamed('/welcome');
+    } catch (e) {
+      debugPrint("Error en logout: ${e.toString()}");
     }
   }
 }

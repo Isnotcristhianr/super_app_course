@@ -25,15 +25,39 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme(selector: 0).getTheme(),
       getPages: Routes.pages,
-      initialRoute: _getInitialRoute(),
+      home: const AuthenticationWrapper(),
     );
   }
+}
 
-  String _getInitialRoute() {
-    final authController = Get.put(AuthController());
-    if (authController.authStatus.value == AuthStatus.authenticated) {
-      return Routes.home;
-    }
-    return Routes.welcome;
+class AuthenticationWrapper extends StatelessWidget {
+  const AuthenticationWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final AuthController authController = Get.put(AuthController());
+
+    return Obx(() {
+      switch (authController.authStatus.value) {
+        case AuthStatus.initial:
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        case AuthStatus.authenticated:
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Get.offAllNamed(Routes.home);
+          });
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        case AuthStatus.unauthenticated:
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Get.offAllNamed(Routes.welcome);
+          });
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+      }
+    });
   }
 }
