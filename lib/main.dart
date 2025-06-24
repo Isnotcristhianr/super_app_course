@@ -4,8 +4,12 @@ import 'package:super_app/config/theme/app_theme.dart';
 import 'package:get/get.dart';
 //routes
 import 'presentation/routes/routes.dart';
+//firebase
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

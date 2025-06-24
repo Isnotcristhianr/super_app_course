@@ -17,6 +17,7 @@ class AuthController extends GetxController {
   late String uid;
   final Rx<String> userName = ''.obs;
   final TextEditingController userEmail = TextEditingController();
+  final TextEditingController userPassword = TextEditingController();
   final Rx<String> userProfilePictureUrl = ''.obs;
   final Rx<String> userDni = ''.obs;
   final Rx<String> userPhoneNumber = ''.obs;

@@ -38,6 +38,7 @@ class LoginView extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                controller: authController.userPassword,
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Contraseña',
@@ -56,7 +57,18 @@ class LoginView extends StatelessWidget {
               ),
               const Spacer(),
               ElevatedButton(
-                onPressed: () => Get.offAllNamed('/home'),
+                onPressed: () => {
+                  debugPrint(
+                    "Email: ${authController.userEmail.text}",
+                  ),
+                  debugPrint(
+                    "Password: ${authController.userPassword.text}",
+                  ),
+                  authController.loginWithEmailAndPassword(
+                    authController.userEmail.text,
+                    authController.userPassword.text,
+                  )
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
                   foregroundColor: Colors.white,
