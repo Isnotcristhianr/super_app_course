@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'presentation/routes/routes.dart';
 //firebase
 import 'package:firebase_core/firebase_core.dart';
+//controllers
+import 'bloc/controllers/auth_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +25,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme(selector: 0).getTheme(),
       getPages: Routes.pages,
-      initialRoute: Routes.welcome,
+      initialRoute: _getInitialRoute(),
     );
+  }
+
+  String _getInitialRoute() {
+    final authController = Get.put(AuthController());
+    if (authController.authStatus.value == AuthStatus.authenticated) {
+      return Routes.home;
+    }
+    return Routes.welcome;
   }
 }

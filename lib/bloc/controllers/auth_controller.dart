@@ -69,6 +69,8 @@ class AuthController extends GetxController {
       await _loadUserData();
       authStatus.value = AuthStatus.authenticated;
 
+      Get.offAllNamed('/home');
+
     }catch (e){
       debugPrint("Error: ${e.toString()}");
     }
