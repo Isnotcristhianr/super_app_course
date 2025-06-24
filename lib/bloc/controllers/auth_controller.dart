@@ -16,7 +16,7 @@ class AuthController extends GetxController {
   //user
   late String uid;
   final Rx<String> userName = ''.obs;
-  final Rx<String> userEmail = ''.obs;
+  final TextEditingController userEmail = TextEditingController();
   final Rx<String> userProfilePictureUrl = ''.obs;
   final Rx<String> userDni = ''.obs;
   final Rx<String> userPhoneNumber = ''.obs;
@@ -58,6 +58,18 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       debugPrint("Error loading user data: ${e.toString()}");
+    }
+  }
+
+  //email and password
+  Future<void> loginWithEmailAndPassword(String email, String password) async{
+    try{
+      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      await _loadUserData();
+      authStatus.value = AuthStatus.authenticated;
+
+    }catch (e){
+      debugPrint("Error: ${e.toString()}");
     }
   }
 }

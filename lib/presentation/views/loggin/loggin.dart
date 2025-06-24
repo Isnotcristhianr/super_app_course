@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+//controllers
+import '../../../bloc/controllers/auth_controller.dart';
 
 class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+  LoginView({super.key});
+
+  final AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +28,7 @@ class LoginView extends StatelessWidget {
               ),
               const SizedBox(height: 32),
               TextFormField(
+                controller: authController.userEmail,
                 decoration: InputDecoration(
                   labelText: 'Correo electrónico',
                   border: OutlineInputBorder(
