@@ -93,14 +93,6 @@ class AuthController extends GetxController {
       await _firebaseAuth.signOut();
       authStatus.value = AuthStatus.unauthenticated;
 
-      // Limpiar datos del usuario
-      userName.value = '';
-      userEmail.clear();
-      userPassword.clear();
-      userProfilePictureUrl.value = '';
-      userDni.value = '';
-      userPhoneNumber.value = '';
-      userType.value = '';
 
       debugPrint("Logout successful");
       Get.offAllNamed('/welcome');

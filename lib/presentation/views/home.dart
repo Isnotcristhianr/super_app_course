@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+//controllers
+import '../../../bloc/controllers/auth_controller.dart';
+
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+   HomeView({super.key});
+  final AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -18,34 +24,11 @@ class HomeView extends StatelessWidget {
       drawer: Drawer(
         child: ListView(
           children: [
-            UserAccountsDrawerHeader(
-              accountName: const Text('Usuario Demo'),
-              accountEmail: const Text('usuario@demo.com'),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Theme.of(context).primaryColor,
-                child: const Text('U'),
-              ),
-            ),
             ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Inicio'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Perfil'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Configuración'),
-              onTap: () {},
-            ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.exit_to_app),
-              title: const Text('Cerrar Sesión'),
-              onTap: () {},
+              title: Text('Cerrar Sesión'),
+              onTap: () {
+                authController.logout();
+              },
             ),
           ],
         ),
