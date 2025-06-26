@@ -93,11 +93,67 @@ class AuthController extends GetxController {
       await _firebaseAuth.signOut();
       authStatus.value = AuthStatus.unauthenticated;
 
-
       debugPrint("Logout successful");
       Get.offAllNamed('/welcome');
     } catch (e) {
       debugPrint("Error en logout: ${e.toString()}");
+    }
+  }
+
+  //create account
+  Future<void> createAccount(
+    String name,
+    String email,
+    String password,
+    String confirmPassword,
+    String dni,
+    String type,
+  ) async {
+    try {
+      //validadores
+      //1. password
+      if (password.length < 6) {
+        Get.snackbar("Error", "La contraseña debe tener al menos 6 caracteres");
+        return;
+      }
+      //2. email
+      if (!email.contains("@")) {
+        Get.snackbar("Error", "El email no es valido");
+        return;
+      }
+      //3. dni
+      if (dni.length != 10) {
+        Get.snackbar("Error", "El dni debe tener 10 caracteres");
+        return;
+      }
+
+      //4. repeat password
+      if (password != confirmPassword) {
+        Get.snackbar("Error", "Las contraseñas no coinciden");
+        return;
+      }
+
+      //5. create user
+      await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      //6. create user in firestore
+      await FirebaseFirestore.instance.collection("users").doc(uid).set({
+        "name": name,
+        "email": email,
+        "profilePictureUrl": "",
+        "dni": dni,
+        "phoneNumber": "",
+        "type": "free",
+        "settings": [],
+        "createdAt": DateTime.now(),
+      });
+
+      
+    } catch (e) {
+      debugPrint("Error en create account: ${e.toString()}");
     }
   }
 }
