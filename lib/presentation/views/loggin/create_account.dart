@@ -89,7 +89,14 @@ class CreateAccount extends StatelessWidget {
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: () {
-                  // Aquí irá la lógica de registro
+                  authController.createAccount(
+                    nameController.text,
+                    emailController.text,
+                    passwordController.text,
+                    confirmPasswordController.text,
+                    dniController.text,
+                    "free",
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,

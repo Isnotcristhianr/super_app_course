@@ -146,12 +146,12 @@ class AuthController extends GetxController {
         "profilePictureUrl": "",
         "dni": dni,
         "phoneNumber": "",
-        "type": "free",
+        "type": type,
         "settings": [],
         "createdAt": DateTime.now(),
       });
 
-      
+      Get.offAllNamed('/login');
     } catch (e) {
       debugPrint("Error en create account: ${e.toString()}");
     }
