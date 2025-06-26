@@ -55,20 +55,29 @@ class LoginView extends StatelessWidget {
                   child: const Text('¿Olvidaste tu contraseña?'),
                 ),
               ),
+              const SizedBox(height: 16),
+              Align(
+                alignment: Alignment.topCenter,
+                child: TextButton(
+                  onPressed: () {
+                    Get.toNamed("/createAccount");
+                  },
+                  child: const Text('¿No tienes una cuenta?'),
+                ),
+              ),
               const Spacer(),
               ElevatedButton(
-                onPressed: () => {
-                  debugPrint(
-                    "Email: ${authController.userEmail.text}",
-                  ),
-                  debugPrint(
-                    "Password: ${authController.userPassword.text}",
-                  ),
-                  authController.loginWithEmailAndPassword(
-                    authController.userEmail.text,
-                    authController.userPassword.text,
-                  )
-                },
+                onPressed:
+                    () => {
+                      debugPrint("Email: ${authController.userEmail.text}"),
+                      debugPrint(
+                        "Password: ${authController.userPassword.text}",
+                      ),
+                      authController.loginWithEmailAndPassword(
+                        authController.userEmail.text,
+                        authController.userPassword.text,
+                      ),
+                    },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
                   foregroundColor: Colors.white,
