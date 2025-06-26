@@ -139,6 +139,8 @@ class AuthController extends GetxController {
         password: password,
       );
 
+      uid = _firebaseAuth.currentUser!.uid;
+
       //6. create user in firestore
       await FirebaseFirestore.instance.collection("users").doc(uid).set({
         "name": name,
@@ -150,6 +152,15 @@ class AuthController extends GetxController {
         "settings": [],
         "createdAt": DateTime.now(),
       });
+
+      //7. verificar correo
+      final signedUser = _firebaseAuth.currentUser;
+      if (signedUser != null) {
+        await signedUser.sendEmailVerification();
+      }
+
+      //8. logout
+      await logout();
 
       Get.offAllNamed('/login');
     } catch (e) {
