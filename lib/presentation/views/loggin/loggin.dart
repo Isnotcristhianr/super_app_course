@@ -65,6 +65,25 @@ class LoginView extends StatelessWidget {
                   child: const Text('¿No tienes una cuenta?'),
                 ),
               ),
+              const SizedBox(height: 16),
+              Align(
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(8),
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Image.asset(
+                    "lib/assets/icons/google.png",
+                    height: 40,
+                    width: 40,
+                  ),
+                ),
+              ),
               const Spacer(),
               ElevatedButton(
                 onPressed:
