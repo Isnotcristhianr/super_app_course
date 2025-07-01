@@ -71,16 +71,25 @@ class AuthController extends GetxController {
   //email and password
   Future<void> loginWithEmailAndPassword(String email, String password) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      uid = _firebaseAuth.currentUser!.uid;
-      await _loadUserData();
-      authStatus.value = AuthStatus.authenticated;
-      debugPrint("Login successful");
+      //1. verificar si el usuario esta verificado
+      final user =
+          await FirebaseFirestore.instance.collection("users").doc(uid).get();
+      if (user.data()?['isVerified'] == false) {
+        Get.snackbar("Error", "El usuario no esta verificado");
+        return;
+      } else {
+        await _firebaseAuth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
 
-      Get.offAllNamed('/home');
+        uid = _firebaseAuth.currentUser!.uid;
+        await _loadUserData();
+        authStatus.value = AuthStatus.authenticated;
+        debugPrint("Login successful");
+
+        Get.offAllNamed('/home');
+      }
     } catch (e) {
       authStatus.value = AuthStatus.unauthenticated;
       debugPrint("Error en login: ${e.toString()}");
@@ -151,12 +160,16 @@ class AuthController extends GetxController {
         "type": type,
         "settings": [],
         "createdAt": DateTime.now(),
+        "isVerified": false,
       });
 
       //7. verificar correo
       final signedUser = _firebaseAuth.currentUser;
       if (signedUser != null) {
         await signedUser.sendEmailVerification();
+        await FirebaseFirestore.instance.collection("users").doc(uid).update({
+          "isVerified": false,
+        });
       }
 
       //8. logout
