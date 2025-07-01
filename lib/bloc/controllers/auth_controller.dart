@@ -72,10 +72,15 @@ class AuthController extends GetxController {
   Future<void> loginWithEmailAndPassword(String email, String password) async {
     try {
       //1. verificar si el usuario esta verificado
-      final user =
-          await FirebaseFirestore.instance.collection("users").doc(uid).get();
-      if (user.data()?['isVerified'] == false) {
-        Get.snackbar("Error", "El usuario no esta verificado");
+      final UserCredential userCredential = await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
+      if (userCredential.user?.emailVerified == false) {
+        Get.snackbar(
+          "Error",
+          "El usuario no esta verificado",
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
         return;
       } else {
         await _firebaseAuth.signInWithEmailAndPassword(
