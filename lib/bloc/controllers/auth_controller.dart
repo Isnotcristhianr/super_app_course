@@ -212,7 +212,6 @@ class AuthController extends GetxController {
       );
 
       //2. verificar si el usuario esta verificado
-
       if (userCredential.user?.emailVerified == false) {
         Get.snackbar("Error", "El usuario no esta verificado");
       }
@@ -229,6 +228,14 @@ class AuthController extends GetxController {
         "createdAt": DateTime.now(),
         "isVerified": false,
       });
+
+      //ir a la pantalla de inicio
+      uid = userCredential.user!.uid;
+      await _loadUserData();
+      authStatus.value = AuthStatus.authenticated;
+      debugPrint("Login successful");
+      Get.offAllNamed('/home');
+      
     } catch (e) {
       Get.snackbar("Error", e.toString());
     }
