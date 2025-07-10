@@ -185,4 +185,52 @@ class AuthController extends GetxController {
       debugPrint("Error en create account: ${e.toString()}");
     }
   }
+
+  //google sign in
+  Future<void> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      if (googleUser == null) {
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final credencial = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      //1. verificar en bdd si el usuario existe
+      final userDoc =
+          await FirebaseFirestore.instance.collection("users").doc();
+
+      final userCredential = await _firebaseAuth.signInWithCredential(
+        credencial,
+      );
+
+      //2. verificar si el usuario esta verificado
+
+      if (userCredential.user?.emailVerified == false) {
+        Get.snackbar("Error", "El usuario no esta verificado");
+      }
+
+      //3. crear usuario en bdd
+      await FirebaseFirestore.instance.collection("users").doc(uid).set({
+        "name": userCredential.user?.displayName ?? "",
+        "email": userCredential.user?.email ?? "",
+        "profilePictureUrl": userCredential.user?.photoURL ?? "",
+        "dni": "",
+        "phoneNumber": "",
+        "type": "free",
+        "settings": [],
+        "createdAt": DateTime.now(),
+        "isVerified": false,
+      });
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    }
+  }
 }
