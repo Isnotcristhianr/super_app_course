@@ -25,12 +25,13 @@ class ProfileController extends GetxController {
           name.value = data?["name"] ?? "";
           email.value = data?["email"] ?? "";
           phone.value = data?["phone"] ?? "";
+          debugPrint("name: ${name.value}");
+          debugPrint("email: ${email.value}");
+          debugPrint("phone: ${phone.value}");
         }
       }else{
         debugPrint("No hay usuario autenticado");
       }
-      
-
     }catch(e){
       debugPrint(e.toString());
     }
