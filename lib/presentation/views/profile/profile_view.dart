@@ -74,6 +74,16 @@ class _ProfileViewState extends State<ProfileView> {
               );
             },
           ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              
+            },
+            child: Text(
+              "Actualizar",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
         ],
       ),
     );
