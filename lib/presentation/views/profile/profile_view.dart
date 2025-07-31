@@ -34,9 +34,13 @@ class _ProfileViewState extends State<ProfileView> {
           FormField(
             builder: (context) {
               return TextField(
-                decoration: InputDecoration(
-                  labelText: profilecontroller.name.string,
-                ),
+                decoration: InputDecoration(labelText: "Nombre"),
+                controller:
+                    profilecontroller.name != null
+                        ? TextEditingController(
+                          text: profilecontroller.name.value,
+                        )
+                        : null,
               );
             },
           ),
@@ -44,7 +48,15 @@ class _ProfileViewState extends State<ProfileView> {
           listaPerfil(title: "Email", icon: Icons.mail),
           FormField(
             builder: (context) {
-              return TextField(decoration: InputDecoration(labelText: "Email"));
+              return TextField(
+                decoration: InputDecoration(labelText: "Email"),
+                controller:
+                    profilecontroller.email != null
+                        ? TextEditingController(
+                          text: profilecontroller.email.value,
+                        )
+                        : null,
+              );
             },
           ),
           SizedBox(height: 20),
@@ -53,6 +65,12 @@ class _ProfileViewState extends State<ProfileView> {
             builder: (context) {
               return TextField(
                 decoration: InputDecoration(labelText: "Teléfono"),
+                controller:
+                    profilecontroller.phone != null
+                        ? TextEditingController(
+                          text: profilecontroller.phone.value,
+                        )
+                        : null,
               );
             },
           ),
