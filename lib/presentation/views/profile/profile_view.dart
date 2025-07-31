@@ -16,7 +16,12 @@ class _ProfileViewState extends State<ProfileView> {
   void initState() {
     super.initState();
     profilecontroller.getProfileUid();
+    nameController.text = profilecontroller.name.value;
+    phoneController.text = profilecontroller.phone.value;
   }
+
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,54 +35,38 @@ class _ProfileViewState extends State<ProfileView> {
             style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 20),
+          listaPerfil(
+            title: "Email: ${profilecontroller.email.value}",
+            icon: Icons.mail,
+          ),
           listaPerfil(title: "Nombre", icon: Icons.person),
           FormField(
             builder: (context) {
               return TextField(
                 decoration: InputDecoration(labelText: "Nombre"),
-                controller:
-                    profilecontroller.name != null
-                        ? TextEditingController(
-                          text: profilecontroller.name.value,
-                        )
-                        : null,
+                controller: nameController,
               );
             },
           ),
           SizedBox(height: 20),
-          listaPerfil(title: "Email", icon: Icons.mail),
-          FormField(
-            builder: (context) {
-              return TextField(
-                decoration: InputDecoration(labelText: "Email"),
-                controller:
-                    profilecontroller.email != null
-                        ? TextEditingController(
-                          text: profilecontroller.email.value,
-                        )
-                        : null,
-              );
-            },
-          ),
+
           SizedBox(height: 20),
           ListTile(leading: Icon(Icons.phone), title: Text("Teléfono")),
           FormField(
             builder: (context) {
               return TextField(
                 decoration: InputDecoration(labelText: "Teléfono"),
-                controller:
-                    profilecontroller.phone != null
-                        ? TextEditingController(
-                          text: profilecontroller.phone.value,
-                        )
-                        : null,
+                controller: phoneController,
               );
             },
           ),
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              
+              profilecontroller.updateProfile(
+                nameController.text,
+                phoneController.text,
+              );
             },
             child: Text(
               "Actualizar",
