@@ -16,12 +16,15 @@ class _ProfileViewState extends State<ProfileView> {
   void initState() {
     super.initState();
     profilecontroller.getProfileUid();
-    nameController.text = profilecontroller.name.value;
-    phoneController.text = profilecontroller.phone.value;
+
+    ever(profilecontroller.email, (value) => emailController.text = value);
+    ever(profilecontroller.phone, (value) => phoneController.text = value);
+    ever(profilecontroller.name, (value) => nameController.text = value);
   }
 
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
+  final emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,7 @@ class _ProfileViewState extends State<ProfileView> {
           ),
           SizedBox(height: 20),
           listaPerfil(
-            title: "Email: ${profilecontroller.email.value}",
+            title: "Email: ${emailController.text}",
             icon: Icons.mail,
           ),
           listaPerfil(title: "Nombre", icon: Icons.person),
