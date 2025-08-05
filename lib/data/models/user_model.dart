@@ -9,6 +9,11 @@ class UserModel {
   List<String> settings;
   DateTime createdAt;
   bool? isVerified;
+  String? address;
+  String? city;
+  String? state;
+  String? zipCode;
+  String? country;
 
   UserModel({
     required this.id,
@@ -21,6 +26,11 @@ class UserModel {
     required this.settings,
     required this.createdAt,
     this.isVerified = false,
+    this.address,
+    this.city,
+    this.state,
+    this.zipCode,
+    this.country,
   });
 
   //factory
@@ -36,6 +46,11 @@ class UserModel {
       settings: List<String>.from(json['settings'] ?? []),
       createdAt: DateTime.parse(json['createdAt'] as String),
       isVerified: json['isVerified'] as bool? ?? false,
+      address: json['address'] as String? ?? '',
+      city: json['city'] as String? ?? '',
+      state: json['state'] as String? ?? '',
+      zipCode: json['zipCode'] as String? ?? '',
+      country: json['country'] as String? ?? '',
     );
   }
 }
