@@ -5,6 +5,7 @@ import '../views/loggin/loggin.dart';
 import '../views/home.dart';
 import '../views/loggin/create_account.dart';
 import '../views/profile/profile_view.dart';
+import '../views/chat/chat_view.dart';
 
 class Routes {
   static const String home = '/home';
@@ -12,6 +13,7 @@ class Routes {
   static const String welcome = '/welcome';
   static const String createAccount = '/createAccount';
   static const String profile = '/profile';
+  static const String chat = '/chat';
 
   static final List<GetPage> pages = [
     GetPage(name: welcome, page: () => WelcomeView()),
@@ -19,5 +21,6 @@ class Routes {
     GetPage(name: home, page: () => HomeView()),
     GetPage(name: createAccount, page: () => CreateAccount()),
     GetPage(name: profile, page: () => ProfileView()),
+    GetPage(name: chat, page: () => ChatView()),
   ];
 }
