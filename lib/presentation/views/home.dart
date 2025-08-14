@@ -25,6 +25,11 @@ class HomeView extends StatelessWidget {
                 Get.toNamed("/profile");
               },
             ),
+            ListBody(children: [ListTile(title: Text('Chat'),
+            onTap: () {
+              Get.toNamed("/chat");
+            },
+            )]),
             //footer
             const Divider(),
             ListTile(
