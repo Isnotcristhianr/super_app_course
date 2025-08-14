@@ -48,6 +48,8 @@ dependencies:
   firebase_storage: ^13.0.0
   #ia
   firebase_ai: ^3.1.0
+  #chat
+  flutter_chat_ui: ^2.9.0
 
 dev_dependencies:
   flutter_test:
